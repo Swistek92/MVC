@@ -1,0 +1,58 @@
+# 🐍 Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# 🌐 Django
+*.log
+*.pot
+*.pyc
+*.sqlite3
+db.sqlite3
+*.db
+
+# 🧪 Testing
+.coverage
+htmlcov/
+.tox/
+.noseids
+.pytest_cache/
+
+# 🛠️ IDEs i edytory
+.vscode/
+.idea/
+*.swp
+*~
+
+# 📦 Virtual environment
+venv/
+env/
+ENV/
+.venv/
+pip-log.txt
+
+# 📁 System files
+.DS_Store
+Thumbs.db
+
+# 📷 Media / uploads
+media/
+staticfiles/
+
+# 🗃️ Migrations (opcjonalnie – tylko jeśli generujesz je na serwerze)
+**/migrations/*.pyc
+**/migrations/__pycache__/
+# UWAGA: tylko jeśli chcesz ignorować lokalnie wygenerowane migracje:
+# **/migrations/*.py
+
+# 🔐 Sekrety (upewnij się, że SECRET_KEY i hasła nie są w kodzie!)
+.env
+.env.*
+
+# 📦 Python egg
+*.egg
+*.egg-info/
+dist/
+build/
