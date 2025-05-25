@@ -1,0 +1,56 @@
+<header class="wrapper column full-center">
+  <!-- Logo image -->
+  <img src="assets/images/oc-logo.svg" alt="Logo image" class="logo" />
+
+  <!-- Navigation -->
+  <div class="row gap-1 items-center">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a routerLink="/about-us" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+      >About</a
+    >
+    <ng-container *ngIf="user$ | async as user">
+      <a
+        *ngIf="isAdmin(user)"
+        routerLink="/dashboard"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Handle Users
+      </a>
+    </ng-container>
+
+    <!-- 🌓 Toggle Theme Button -->
+    <button (click)="toggleTheme()" class="theme-toggle">
+      {{ isDarkMode ? "☀️  Light" : "🌙 Dark" }}
+    </button>
+    <!-- <p-button label="Zaloguj" icon="pi pi-user" (click)="openLogin()" /> -->
+    <app-login />
+    <!-- login -->
+    <div *ngIf="user$ | async as user; else loginButton">
+      <span *ngIf="user$ | async as user; else loginButton"> 👤 {{ user.email }} </span>
+      <p-button
+        label="Wyloguj"
+        icon="pi pi-user"
+        (click)="logout()"
+        class="logout-button"
+      ></p-button>
+    </div>
+
+    <app-form-register />
+
+    <ng-template #loginButton>
+      <div>
+        <p-button label="Zaloguj" icon="pi pi-user" (click)="openLogin()" />
+        <p-button
+          label="Zarejestruj"
+          icon="pi pi-user-plus"
+          (click)="openRegister()"
+          class="register-button"
+        ></p-button>
+      </div>
+    </ng-template>
+
+    <!-- <span *ngIf="user$ | async as user"> Zalogowany jako: {{ user.email }} </span> -->
+    <!-- Display user name if logged in -->
+  </div>
+</header>

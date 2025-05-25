@@ -1,0 +1,42 @@
+<div class="column home-wrapper">
+  <button
+    *ngIf="isActive()"
+    type="button"
+    pButton
+    icon="pi pi-plus"
+    (click)="homeCtrl.openAdd()"
+    class="add-product-btn addbutton"
+  >
+    Add Product
+  </button>
+
+  <app-item-filter [user]="isActive()" (filterChange)="onFilterChange($event)"></app-item-filter>
+
+  <!-- 🧾 Lista produktów -->
+  <div class="row wrap gap-1 space-around product-section">
+    <app-product
+      *ngFor="let product of products"
+      [product]="product"
+      (delete)="deleteProduct(product.id!)"
+      (edit)="homeCtrl.openEdit(product)"
+    ></app-product>
+  </div>
+
+  <!-- 📄 Paginator -->
+  <p-paginator
+    #paginator
+    class="paginator"
+    (onPageChange)="onPageChange($event)"
+    [rows]="rows"
+    [totalRecords]="totalRecords"
+    [rowsPerPageOptions]="[5, 10, 20]"
+  ></p-paginator>
+</div>
+
+<app-product-form
+  [(visible)]="homeCtrl.displayPopup"
+  [product]="homeCtrl.selectedProduct"
+  [mode]="homeCtrl.popupMode"
+  (cancelEvent)="homeCtrl.cancelPopup()"
+  (success)="onSeccessAdd()"
+/>

@@ -1,0 +1,37 @@
+<div class="column gap-1 wrapper">
+  <button (click)="goToDetails()" class="clickable image-button">
+    <img [src]="product.image" alt="prod image" />
+  </button>
+
+  <h2 class="title">{{ product.name | truncateName: 10 : ".." }}</h2>
+  <div class="row gap-05">
+    <span class="price-label">Price:</span>
+    <span class="price">{{ product.startingPrice | price }}</span>
+  </div>
+  <p-rating [(ngModel)]="product.rating" [readonly]="true" iconCancelClass="hidden" />
+
+  <!-- action btn -->
+  <!-- action btn (widoczne tylko dla właściciela) -->
+  <ng-container *appIsOwner="product.ownerId">
+    <div class="row gap-05">
+      <button
+        type="button"
+        pButton
+        icon="pi pi-pencil"
+        (click)="editProduct()"
+        label="Edit"
+      ></button>
+      <button
+        type="button"
+        pButton
+        icon="pi pi-trash"
+        (click)="confirmDelete()"
+        label="Delete"
+        class="p-button-danger"
+        #deleteButton
+      ></button>
+    </div>
+  </ng-container>
+
+  <p-confirmPopup />
+</div>

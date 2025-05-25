@@ -1,0 +1,103 @@
+<app-popup-wrapper
+  [(visible)]="visible"
+  [title]="mode === 'edit' ? 'Edit Product' : 'Add Product'"
+  (close)="onCancel()"
+>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <!-- Name -->
+    <div>
+      <label for="name">Name</label>
+      <input id="name" type="text" pInputText formControlName="name" />
+      <div *ngIf="submitted && f['name'].invalid" class="form-error">Name is required</div>
+    </div>
+
+    <!-- Image -->
+    <div>
+      <label for="image">Image URL</label>
+      <input id="image" type="text" pInputText formControlName="image" />
+    </div>
+
+    <!-- Radio -->
+    <div class="radio-group">
+      <div class="p-radioButton">
+        <p-radioButton inputId="auction" formControlName="isAuction" [value]="true"></p-radioButton>
+        <label for="auction">Is auction</label>
+      </div>
+      <div class="p-radioButton">
+        <p-radioButton inputId="buyNow" formControlName="isAuction" [value]="false"></p-radioButton>
+        <label for="buyNow">Is buy now</label>
+      </div>
+    </div>
+
+    <!-- Starting Price -->
+    <div [ngStyle]="{ display: isAuction ? 'block' : 'none' }" id="startingPriceField">
+      <label for="startingPrice">Starting Price</label>
+      <input id="startingPrice" type="number" pInputText formControlName="startingPrice" />
+      <div *ngIf="submitted && f['startingPrice'].invalid" class="form-error">
+        Starting price is required
+      </div>
+    </div>
+
+    <!-- Buy Now Price -->
+    <div [ngStyle]="{ display: isAuction ? 'none' : 'block' }" id="buyNowPriceField">
+      <label for="buyNowPrice">Buy Now Price</label>
+      <input id="buyNowPrice" type="number" pInputText formControlName="buyNowPrice" />
+    </div>
+
+    <!-- Quantity -->
+    <div [ngStyle]="{ display: isAuction ? 'none' : 'block' }" id="quantityField">
+      <label for="quantity">Quantity</label>
+      <input id="quantity" type="number" pInputText formControlName="quantity" />
+      <div *ngIf="form.errors?.['quantityInvalid']" class="form-error">
+        Aukcja może mieć tylko 1 sztukę produktu.
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div>
+      <label for="description">Description</label>
+      <textarea id="description" rows="3" pInputText formControlName="description"></textarea>
+    </div>
+
+    <!-- Category -->
+    <div>
+      <label for="category">Category</label>
+      <select id="category" formControlName="category">
+        <option *ngFor="let category of categoryOptions" [value]="category">
+          {{ category }}
+        </option>
+      </select>
+      <div *ngIf="submitted && f['category'].invalid" class="form-error">Category is required</div>
+    </div>
+
+    <!-- Location -->
+    <div>
+      <label for="location">Location</label>
+      <input id="location" type="text" pInputText formControlName="location" />
+    </div>
+
+    <!-- Tags -->
+    <div>
+      <label for="tags">Tags (comma-separated)</label>
+      <input
+        id="tags"
+        type="text"
+        pInputText
+        [value]="form.get('tags')?.value?.join(', ')"
+        (change)="onTagsInputChange($event)"
+      />
+    </div>
+
+    <!-- Buttons -->
+    <div class="form-actions">
+      <button pButton [label]="mode === 'edit' ? 'Save' : 'Add'"></button>
+      <button
+        pButton
+        type="button"
+        label="Cancel"
+        class="p-button-secondary"
+        (click)="onCancel()"
+      ></button>
+    </div>
+  </form>
+</app-popup-wrapper>
